@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Blog Contents Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Glide.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
+    
+    <!-- Your existing styles -->
+    <link rel="stylesheet" href="blog.css">
+    
+    <!-- Custom Glide styles -->
+    <style>
+        .blog-glide {
+            max-width: 900px;
+            margin: 20px auto;
+            position: relative; /* Important for arrow positioning */
+        }
+        
+        .blog-glide .glide__track {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .blog-glide .glide__slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            min-height: 300px; /* Ensure consistent height */
+        }
+        
+        .blog-glide .glide__slide img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        
+        /* Fixed arrow positioning */
+        .blog-glide .glide__arrows {
+            position: static; /* Remove absolute positioning from container */
+        }
+        
+        .blog-glide .glide__arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .blog-glide .glide__arrow:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .blog-glide .glide__arrow--left {
+            left: 20px;
+        }
+        
+        .blog-glide .glide__arrow--right {
+            right: 20px;
+        }
+        
+        .blog-glide .glide__bullets {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            gap: 8px;
+        }
+        
+        .blog-glide .glide__bullet {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .blog-glide .glide__bullet--active {
+            background: #007bff;
+            transform: scale(1.2);
+        }
+        
+        /* Hide carousel when no images */
+        .image-carousel-container.hidden {
+            display: none;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .blog-glide {
+                max-width: 95%;
+                margin: 10px auto;
+            }
+            
+            .blog-glide .glide__slide img {
+                max-height: 400px;
+            }
+            
+            .blog-glide .glide__arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .blog-glide .glide__arrow--left {
+                left: 10px;
+            }
+            
+            .blog-glide .glide__arrow--right {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>My Blogs</h1>
+    
+    <div class="controls">
+        <div id="filterControls" class="hidden">
+            <label>Tag:</label>
+            <select id="tagFilter">
+                <option value="">All Tags</option>
+            </select>
+            
+            <label>Search:</label>
+            <input type="text" id="searchInput" placeholder="Search titles...">
+        </div>
+    </div>
+
+    <div id="listView">
+        <div id="stats"></div>
+        <ul id="blogList" class="blog-list"></ul>
+    </div>
+
+    <div id="contentView" class="content-view hidden">
+        <button class="back-button" onclick="showList()">← Back to List</button>
+        
+        <!-- Glide.js Image Carousel -->
+        <div id="imageCarousel" class="image-carousel-container hidden">
+            <div class="glide blog-glide" id="blog-glide">
+                <div class="glide__track" data-glide-el="track">
+                    <ul class="glide__slides" id="glide-slides">
+                        <!-- Images will be inserted here dynamically -->
+                    </ul>
+                </div>
+                
+                <!-- Navigation arrows -->
+                <div class="glide__arrows" data-glide-el="controls">
+                    <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
+                    <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+                </div>
+                
+                <!-- Dots indicators -->
+                <div class="glide__bullets" data-glide-el="controls[nav]" id="glide-bullets">
+                    <!-- Bullets will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+        
+        <div id="markdownContent" class="markdown-content"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+    <script src="blog.js"></script>
+</body>
+</html>
