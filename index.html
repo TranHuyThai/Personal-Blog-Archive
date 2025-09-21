@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>My blog</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- icons CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    
+    <!-- Glide.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
+    
+    <!-- Your existing styles -->
+    <link rel="stylesheet" href="/src/css/blog.css">
+    
+    <!-- Custom Glide styles -->
+    <link rel="stylesheet" href="/src/css/glide-carousel.css">
+
+    <!-- navbar styles -->
+     <link rel="stylesheet" href="/src/css/navbar.css">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-header">
+            <div class="logo">
+                tranpoline
+                <img src="/public/assets/imgs/logo.gif" alt="Logo" class="logo-gif">
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="navbar-menu">
+            <div class="nav-links">
+                <button id="btnAbout">About Me</button>
+                <button id="btnBlogs">Blogs</button>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/tran-huy-thai-4564b8286/" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/TranHuyThai" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="aboutView" class="aboutView">
+        <iframe src="/src/templates/about-me-iframe.html"></iframe>
+    </div>
+    
+    <div id="content-wrapper" class="content-wrapper hidden">
+        <div id="filterControls" class="controls hidden">
+            <label>Tag:</label>
+            <select id="tagFilter">
+                <option value="">All Tags</option>
+            </select>
+            
+            <label id="search-label">Search:</label>
+            <input type="text" id="searchInput" placeholder="Search titles...">
+        </div>
+
+        <div id="listView">
+            <div id="stats"></div>
+            <ul id="blogList" class="blog-list"></ul>
+        </div>
+
+        <div id="contentView" class="content-view hidden">
+            <button class="back-button" onclick="showList()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div id="blog-title"></div>
+            
+            <!-- Glide.js Image Carousel -->
+            <div id="imageCarousel" class="image-carousel-container hidden">
+                <div class="glide blog-glide" id="blog-glide">
+                    <div class="glide__track" data-glide-el="track">
+                        <ul class="glide__slides" id="glide-slides">
+                            <!-- Images will be inserted here dynamically -->
+                        </ul>
+                    </div>
+                    
+                    <!-- Navigation arrows -->
+                    <div class="glide__arrows" data-glide-el="controls">
+                        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Dots indicators -->
+                    <div class="glide__bullets" data-glide-el="controls[nav]" id="glide-bullets">
+                        <!-- Bullets will be generated dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="markdownContent" class="markdown-content"></div>
+            <div id="copyright-footer">
+                <p>2025 © Tran Huy Thai. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/js/navbar.js"></script>
+</body>
+</html>
